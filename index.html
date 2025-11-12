@@ -215,6 +215,7 @@
             z-index: 1400;
             opacity: 0;
             padding: 40px 20px;
+            overflow-y: auto;
         }
 
         .results-page.active {
@@ -223,7 +224,7 @@
         }
 
         .results-content {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
             background: rgba(0, 0, 0, 0.8);
             border: 3px solid rgba(255, 107, 107, 0.5);
@@ -272,31 +273,143 @@
             letter-spacing: 0.2em;
         }
 
-        .seating-diagram {
+        .risers-container {
+            perspective: 1000px;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        .risers-view {
+            transform-style: preserve-3d;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 8px;
+            padding: 20px;
+        }
+
+        .riser-row {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 15px;
+            gap: 4px;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .section-indicator {
-            padding: 15px 20px;
+        .riser-row:nth-child(1) { transform: translateY(0px) scale(1); }
+        .riser-row:nth-child(2) { transform: translateY(-5px) scale(0.98); }
+        .riser-row:nth-child(3) { transform: translateY(-10px) scale(0.96); }
+        .riser-row:nth-child(4) { transform: translateY(-15px) scale(0.94); }
+        .riser-row:nth-child(5) { transform: translateY(-20px) scale(0.92); }
+        .riser-row:nth-child(6) { transform: translateY(-25px) scale(0.90); }
+
+        .singer-spot {
+            width: 35px;
+            height: 45px;
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            font-size: 0.9em;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .section-indicator.highlight {
-            background: rgba(255, 217, 61, 0.3);
-            border-color: #ffd93d;
-            animation: glow 2s ease-in-out infinite;
+        .singer-spot.soprano {
+            background: rgba(255, 182, 193, 0.2);
+            border-color: rgba(255, 182, 193, 0.4);
         }
 
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 10px rgba(255, 217, 61, 0.4); }
-            50% { box-shadow: 0 0 25px rgba(255, 217, 61, 0.8); }
+        .singer-spot.alto {
+            background: rgba(221, 160, 221, 0.2);
+            border-color: rgba(221, 160, 221, 0.4);
+        }
+
+        .singer-spot.tenor {
+            background: rgba(135, 206, 250, 0.2);
+            border-color: rgba(135, 206, 250, 0.4);
+        }
+
+        .singer-spot.bass {
+            background: rgba(144, 238, 144, 0.2);
+            border-color: rgba(144, 238, 144, 0.4);
+        }
+
+        .singer-spot.current-student {
+            background: rgba(255, 217, 61, 0.4) !important;
+            border-color: #ffd93d !important;
+            border-width: 3px;
+            animation: pulseGlow 2s ease-in-out infinite;
+            transform: scale(1.15);
+            z-index: 10;
+        }
+
+        .singer-spot.current-student::after {
+            content: '⭐';
+            position: absolute;
+            top: -20px;
+            font-size: 1.2em;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { 
+                box-shadow: 0 0 15px rgba(255, 217, 61, 0.6);
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(255, 217, 61, 1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+        }
+
+        .legend-box {
+            width: 20px;
+            height: 25px;
+            border-radius: 4px;
+            border: 2px solid;
+        }
+
+        .legend-box.soprano {
+            background: rgba(255, 182, 193, 0.2);
+            border-color: rgba(255, 182, 193, 0.4);
+        }
+
+        .legend-box.alto {
+            background: rgba(221, 160, 221, 0.2);
+            border-color: rgba(221, 160, 221, 0.4);
+        }
+
+        .legend-box.tenor {
+            background: rgba(135, 206, 250, 0.2);
+            border-color: rgba(135, 206, 250, 0.4);
+        }
+
+        .legend-box.bass {
+            background: rgba(144, 238, 144, 0.2);
+            border-color: rgba(144, 238, 144, 0.4);
         }
 
         .continue-btn {
@@ -562,6 +675,15 @@
             .results-content {
                 padding: 30px 20px;
             }
+
+            .singer-spot {
+                width: 28px;
+                height: 38px;
+            }
+
+            .riser-row {
+                gap: 3px;
+            }
         }
     </style>
 </head>
@@ -597,7 +719,31 @@
             
             <div class="seating-visual">
                 <div class="stage-indicator">🎭 STAGE 🎭</div>
-                <div class="seating-diagram" id="seatingDiagram"></div>
+                <div class="risers-container">
+                    <div class="risers-view" id="risersView"></div>
+                </div>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-box soprano"></div>
+                        <span>Soprano</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box alto"></div>
+                        <span>Alto</span>
+                    </div>
+                    <div class="legend-item" id="tenorLegend" style="display: none;">
+                        <div class="legend-box tenor"></div>
+                        <span>Tenor</span>
+                    </div>
+                    <div class="legend-item" id="bassLegend" style="display: none;">
+                        <div class="legend-box bass"></div>
+                        <span>Bass/Baritone</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-box" style="background: rgba(255, 217, 61, 0.4); border-color: #ffd93d;"></div>
+                        <span>Your Child ⭐</span>
+                    </div>
+                </div>
             </div>
 
             <button class="continue-btn" onclick="goToSongs()">View Song List</button>
@@ -1021,42 +1167,160 @@
         }
 
         function createSeatingDiagram() {
-            const diagram = document.getElementById('seatingDiagram');
-            diagram.innerHTML = '';
+            const risersView = document.getElementById('risersView');
+            risersView.innerHTML = '';
 
-            const studentPart = getPartCategory(currentStudent.part);
+            // Get all students from current choir and organize by voice part
+            const students = seatingData[currentChoir];
+            const organized = organizeStudentsByPart(students);
             
-            // Sections in order: Soprano, Bass, Tenor, Alto
-            const sections = ['soprano', 'bass', 'tenor', 'alto'];
-            const labels = {
-                soprano: 'SOPRANO',
-                bass: currentChoir === 'north' ? 'LOW VOICES' : 'BASS/BARITONE',
-                tenor: 'TENOR',
-                alto: 'ALTO'
-            };
+            // Show/hide legend items based on choir
+            if (currentChoir === 'north') {
+                document.getElementById('tenorLegend').style.display = 'none';
+                document.getElementById('bassLegend').style.display = 'none';
+            } else {
+                document.getElementById('tenorLegend').style.display = 'flex';
+                document.getElementById('bassLegend').style.display = 'flex';
+            }
 
-            sections.forEach(function(section) {
-                // Skip sections that don't exist in North Stars
-                if (currentChoir === 'north' && (section === 'bass' || section === 'tenor')) {
-                    return;
-                }
-
-                const sectionDiv = document.createElement('div');
-                sectionDiv.className = 'section-indicator';
-                sectionDiv.textContent = labels[section];
-                
-                if (section === studentPart) {
-                    sectionDiv.classList.add('highlight');
-                    sectionDiv.textContent += ' ⭐';
-                }
-                
-                diagram.appendChild(sectionDiv);
-            });
+            // Create risers based on choir type
+            if (currentChoir === 'north') {
+                createNorthRisers(organized, risersView);
+            } else {
+                createMixedRisers(organized, risersView);
+            }
         }
 
-        function getPartCategory(part) {
-            if (part.includes('Soprano')) return 'soprano';
-            if (part.includes('Alto')) return 'alto';
+        function organizeStudentsByPart(students) {
+            const organized = {
+                soprano1: [],
+                soprano2: [],
+                alto1: [],
+                alto2: [],
+                tenor1: [],
+                tenor2: [],
+                bass: [],
+                baritone: []
+            };
+
+            students.forEach(function(student) {
+                const part = student.part.toLowerCase().replace(' ', '');
+                if (organized[part]) {
+                    organized[part].push(student);
+                }
+            });
+
+            // Sort each part by seat number
+            for (let key in organized) {
+                organized[key].sort(function(a, b) {
+                    return a.seat - b.seat;
+                });
+            }
+
+            return organized;
+        }
+
+        function createNorthRisers(organized, container) {
+            // North Stars: Sopranos on left, Altos on right
+            // 6 rows with approximately 10-12 per row
+            const allSopranos = organized.soprano1.concat(organized.soprano2);
+            const allAltos = organized.alto1.concat(organized.alto2);
+            
+            const rowSize = 11;
+            const numRows = 6;
+            
+            for (let row = 0; row < numRows; row++) {
+                const riserRow = document.createElement('div');
+                riserRow.className = 'riser-row';
+                
+                // Calculate which students go in this row
+                const startIdx = row * rowSize;
+                const sopranoSlice = allSopranos.slice(startIdx, startIdx + Math.ceil(rowSize / 2));
+                const altoSlice = allAltos.slice(startIdx, startIdx + Math.floor(rowSize / 2));
+                
+                // Add sopranos (left side)
+                sopranoSlice.forEach(function(student) {
+                    riserRow.appendChild(createSingerSpot(student, 'soprano'));
+                });
+                
+                // Add altos (right side)
+                altoSlice.forEach(function(student) {
+                    riserRow.appendChild(createSingerSpot(student, 'alto'));
+                });
+                
+                // Fill empty spots if needed
+                const totalInRow = sopranoSlice.length + altoSlice.length;
+                for (let i = totalInRow; i < rowSize; i++) {
+                    const emptySpot = document.createElement('div');
+                    emptySpot.className = 'singer-spot';
+                    riserRow.appendChild(emptySpot);
+                }
+                
+                container.appendChild(riserRow);
+            }
+        }
+
+        function createMixedRisers(organized, container) {
+            // Mixed choirs: Sopranos, Bass/Baritone/Tenor, Altos (left to right)
+            const allSopranos = organized.soprano1.concat(organized.soprano2);
+            const allMiddle = organized.bass.concat(organized.baritone).concat(organized.tenor1).concat(organized.tenor2);
+            const allAltos = organized.alto1.concat(organized.alto2);
+            
+            const rowSize = 12;
+            const numRows = 5;
+            
+            for (let row = 0; row < numRows; row++) {
+                const riserRow = document.createElement('div');
+                riserRow.className = 'riser-row';
+                
+                const startIdx = row * Math.floor(rowSize / 3);
+                const sopranoSlice = allSopranos.slice(startIdx, startIdx + Math.floor(rowSize / 3));
+                const middleSlice = allMiddle.slice(startIdx, startIdx + Math.floor(rowSize / 3));
+                const altoSlice = allAltos.slice(startIdx, startIdx + Math.floor(rowSize / 3));
+                
+                // Add sopranos (left)
+                sopranoSlice.forEach(function(student) {
+                    riserRow.appendChild(createSingerSpot(student, 'soprano'));
+                });
+                
+                // Add middle voices (center)
+                middleSlice.forEach(function(student) {
+                    const partType = getPartType(student.part);
+                    riserRow.appendChild(createSingerSpot(student, partType));
+                });
+                
+                // Add altos (right)
+                altoSlice.forEach(function(student) {
+                    riserRow.appendChild(createSingerSpot(student, 'alto'));
+                });
+                
+                // Fill empty spots
+                const totalInRow = sopranoSlice.length + middleSlice.length + altoSlice.length;
+                for (let i = totalInRow; i < rowSize; i++) {
+                    const emptySpot = document.createElement('div');
+                    emptySpot.className = 'singer-spot';
+                    riserRow.appendChild(emptySpot);
+                }
+                
+                container.appendChild(riserRow);
+            }
+        }
+
+        function createSingerSpot(student, partClass) {
+            const spot = document.createElement('div');
+            spot.className = 'singer-spot ' + partClass;
+            
+            // Check if this is the current student
+            if (currentStudent && 
+                student.first === currentStudent.first && 
+                student.last === currentStudent.last) {
+                spot.classList.add('current-student');
+            }
+            
+            return spot;
+        }
+
+        function getPartType(part) {
             if (part.includes('Tenor')) return 'tenor';
             if (part.includes('Bass')) return 'bass';
             if (part.includes('Baritone')) return 'bass';
