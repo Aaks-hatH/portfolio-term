@@ -1278,51 +1278,42 @@
         }
 
         function createMixedRisers(organized, container) {
-            // Mixed choirs: Sopranos, Bass/Baritone/Tenor, Altos (left to right)
-            const allSopranos = organized.soprano1.concat(organized.soprano2);
-            const allMiddle = organized.bass.concat(organized.baritone).concat(organized.tenor1).concat(organized.tenor2);
-            const allAltos = organized.alto1.concat(organized.alto2);
+            const sopranos = organized.soprano1.concat(organized.soprano2);
+            const altos = organized.alto1.concat(organized.alto2);
+            const tenors = organized.tenor1.concat(organized.tenor2);
+            const basses = organized.bass.concat(organized.baritone);
             
-            const rowSize = 12;
             const numRows = 5;
+            const sopranosPerRow = Math.ceil(sopranos.length / numRows);
+            const altosPerRow = Math.ceil(altos.length / numRows);
+            const tenorsPerRow = Math.ceil(tenors.length / numRows);
+            const bassesPerRow = Math.ceil(basses.length / numRows);
             
             for (let row = 0; row < numRows; row++) {
                 const riserRow = document.createElement('div');
                 riserRow.className = 'riser-row';
                 
-                const startIdx = row * Math.floor(rowSize / 3);
-                const sopranoSlice = allSopranos.slice(startIdx, startIdx + Math.floor(rowSize / 3));
-                const middleSlice = allMiddle.slice(startIdx, startIdx + Math.floor(rowSize / 3));
-                const altoSlice = allAltos.slice(startIdx, startIdx + Math.floor(rowSize / 3));
-                
-                // Add sopranos (left)
-                sopranoSlice.forEach(function(student) {
-                    riserRow.appendChild(createSingerSpot(student, 'soprano'));
+                // Order: Soprano | Bass | Tenor | Alto
+                sopranos.slice(row * sopranosPerRow, (row + 1) * sopranosPerRow).forEach(function(student) {
+                    riserRow.appendChild(createSingerSpot(student, "soprano"));
                 });
                 
-                // Add middle voices (center)
-                middleSlice.forEach(function(student) {
-                    const partType = getPartType(student.part);
-                    riserRow.appendChild(createSingerSpot(student, partType));
+                basses.slice(row * bassesPerRow, (row + 1) * bassesPerRow).forEach(function(student) {
+                    riserRow.appendChild(createSingerSpot(student, "bass"));
                 });
                 
-                // Add altos (right)
-                altoSlice.forEach(function(student) {
-                    riserRow.appendChild(createSingerSpot(student, 'alto'));
+                tenors.slice(row * tenorsPerRow, (row + 1) * tenorsPerRow).forEach(function(student) {
+                    riserRow.appendChild(createSingerSpot(student, "tenor"));
                 });
                 
-                // Fill empty spots
-                const totalInRow = sopranoSlice.length + middleSlice.length + altoSlice.length;
-                for (let i = totalInRow; i < rowSize; i++) {
-                    const emptySpot = document.createElement('div');
-                    emptySpot.className = 'singer-spot';
-                    riserRow.appendChild(emptySpot);
-                }
+                altos.slice(row * altosPerRow, (row + 1) * altosPerRow).forEach(function(student) {
+                    riserRow.appendChild(createSingerSpot(student, "alto"));
+                });
                 
                 container.appendChild(riserRow);
             }
         }
-
+        
         function createSingerSpot(student, partClass) {
             const spot = document.createElement('div');
             spot.className = 'singer-spot ' + partClass;
