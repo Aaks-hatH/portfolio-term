@@ -492,17 +492,17 @@ nav.scrolled {
   }
 }
 
-/* Fade Animations */
+/* Fade Animations - Start visible for reliability */
 .fade-in {
-  opacity: 0;
+  opacity: 1;
 }
 
 .fade-in-left {
-  opacity: 0;
+  opacity: 1;
 }
 
 .fade-in-right {
-  opacity: 0;
+  opacity: 1;
 }
 
 /* Responsive Typography */
@@ -1432,51 +1432,79 @@ new Typed('#typed', {
 });
 
 // GSAP ScrollTrigger
-gsap.registerPlugin(ScrollTrigger);
+if (typeof gsap !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
 
-// Enhanced Fade In Animations with stagger
-gsap.utils.toArray('.fade-in').forEach((element, index) => {
-  gsap.from(element, {
-    opacity: 0,
-    y: 60,
-    duration: 1.2,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: element,
-      start: 'top 85%',
-      end: 'bottom 20%',
-      toggleActions: 'play none none reverse'
-    }
+  // Enhanced Fade In Animations with stagger - using fromTo for reliability
+  gsap.utils.toArray('.fade-in').forEach((element, index) => {
+    gsap.fromTo(element, 
+      {
+        opacity: 0,
+        y: 60
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 85%',
+          end: 'bottom 20%',
+          toggleActions: 'play none none reverse',
+          once: false
+        }
+      }
+    );
   });
-});
 
-gsap.utils.toArray('.fade-in-left').forEach(element => {
-  gsap.from(element, {
-    opacity: 0,
-    x: -60,
-    duration: 1.2,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: element,
-      start: 'top 85%',
-      toggleActions: 'play none none reverse'
-    }
+  gsap.utils.toArray('.fade-in-left').forEach(element => {
+    gsap.fromTo(element,
+      {
+        opacity: 0,
+        x: -60
+      },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+          once: false
+        }
+      }
+    );
   });
-});
 
-gsap.utils.toArray('.fade-in-right').forEach(element => {
-  gsap.from(element, {
-    opacity: 0,
-    x: 60,
-    duration: 1.2,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: element,
-      start: 'top 85%',
-      toggleActions: 'play none none reverse'
-    }
+  gsap.utils.toArray('.fade-in-right').forEach(element => {
+    gsap.fromTo(element,
+      {
+        opacity: 0,
+        x: 60
+      },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+          once: false
+        }
+      }
+    );
   });
-});
+} else {
+  // Fallback: Make all content visible if GSAP doesn't load
+  document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
+    el.style.opacity = '1';
+  });
+}
 
 // Enhanced Skill Bar Animations
 gsap.utils.toArray('.skill-progress').forEach(bar => {
@@ -1622,12 +1650,7 @@ if (window.innerWidth >= 768) {
   });
 }
 
-// Performance optimization: Disable animations on low-end devices
-if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
-  document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
-    el.style.opacity = '1';
-  });
-}
+// Note: All animations are optimized for performance
 
 console.log('%c Security Professional Portfolio', 'color: #ffffff; font-size: 20px; font-weight: bold;');
 console.log('%cInterested in the code? Check out the repository!', 'color: #888888; font-size: 14px;');
