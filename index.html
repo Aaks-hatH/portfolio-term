@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Aakshat Hariharan | Web Application Penetration Tester & Security Researcher</title>
 
 <!-- Meta Tags -->
@@ -157,9 +157,61 @@ nav.scrolled {
   width: 100%;
 }
 
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 400px;
+  height: 100vh;
+  background: rgba(10, 10, 10, 0.98);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid var(--border);
+  padding: 6rem 2rem 2rem;
+  transition: right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 999;
+}
+
+.mobile-menu.active {
+  right: 0;
+}
+
+/* Hamburger */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 28px;
+  height: 24px;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: translateY(11px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: translateY(-11px) rotate(-45deg);
+}
+
 /* Hero Section */
 .hero-title {
-  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-size: clamp(2rem, 8vw, 5rem);
   font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.03em;
@@ -199,10 +251,16 @@ nav.scrolled {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1.5rem;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: 2rem;
+  }
 }
 
 .card::before {
@@ -215,16 +273,27 @@ nav.scrolled {
   background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
   opacity: 0;
   transition: opacity 0.4s ease;
+  pointer-events: none;
 }
 
 .card:hover::before {
   opacity: 1;
 }
 
-.card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Touch devices - reduce hover effects */
+@media (hover: none) {
+  .card:active {
+    transform: scale(0.98);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
 }
 
 /* Project Cards */
@@ -265,6 +334,7 @@ nav.scrolled {
   height: 100%;
   background: linear-gradient(90deg, var(--accent-dim) 0%, var(--accent) 100%);
   border-radius: 2px;
+  width: 0;
   transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -296,6 +366,7 @@ nav.scrolled {
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   background: transparent;
@@ -307,6 +378,7 @@ nav.scrolled {
   font-size: 0.9rem;
   position: relative;
   overflow: hidden;
+  white-space: nowrap;
 }
 
 .btn::before {
@@ -339,659 +411,398 @@ nav.scrolled {
 }
 
 .btn-primary:hover {
-  background: transparent;
-  color: var(--accent);
+  background: rgba(255, 255, 255, 0.9);
 }
 
-/* Stats Counter */
-.stat-number {
-  font-size: 2.5rem;
-  font-weight: 700;
-  font-family: 'Space Mono', monospace;
-}
-
-/* Fade In Animations */
-.fade-in {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.fade-in-left {
-  opacity: 0;
-  transform: translateX(-30px);
-}
-
-.fade-in-right {
-  opacity: 0;
-  transform: translateX(30px);
-}
-
-/* Tech Stack Icons */
-.tech-icon {
+/* Loading Screen */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  transition: all 0.3s ease;
-}
-
-.tech-icon:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-4px) scale(1.05);
-}
-
-/* Footer */
-footer {
-  border-top: 1px solid var(--border);
-  margin-top: 8rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.5rem;
-  }
-  
-  nav .desktop-menu {
-    display: none;
-  }
-  
-  .section-padding {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-/* Cursor Effect */
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
   z-index: 9999;
-  transition: transform 0.15s ease;
-  mix-blend-mode: difference;
+  transition: opacity 0.5s ease;
 }
 
-.cursor-outline {
-  width: 30px;
-  height: 30px;
-  border: 2px solid var(--accent);
+.loader {
+  width: 50px;
+  height: 50px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
   border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9998;
-  transition: all 0.15s ease;
-  mix-blend-mode: difference;
+  animation: spin 1s linear infinite;
 }
 
-/* Loading Animation */
-.loading-text {
-  font-family: 'Space Mono', monospace;
-  font-size: 1.5rem;
-  color: var(--accent);
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-.loading-bar {
-  width: 200px;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-  overflow: hidden;
-  margin-top: 1rem;
-}
-
-.loading-progress {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 2px;
-  animation: loading 2s ease-in-out;
-}
-
-@keyframes loading {
-  0% { width: 0%; }
-  100% { width: 100%; }
-}
-
-/* Glitch Effect for Headers */
-.glitch {
-  position: relative;
-  animation: glitch-animation 3s infinite;
-}
-
-@keyframes glitch-animation {
-  0%, 90%, 100% {
-    transform: translate(0);
+/* Custom Cursor - Desktop Only */
+@media (min-width: 1024px) {
+  .cursor-dot,
+  .cursor-outline {
+    pointer-events: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: 10000;
+    transition: all 0.15s ease-out;
   }
-  92% {
-    transform: translate(-2px, 2px);
+
+  .cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
   }
-  94% {
-    transform: translate(2px, -2px);
-  }
-  96% {
-    transform: translate(-2px, -2px);
-  }
-  98% {
-    transform: translate(2px, 2px);
+
+  .cursor-outline {
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease-out;
   }
 }
 
-/* Tooltip */
-.tooltip {
-  position: relative;
-  cursor: help;
-}
-
-.tooltip::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-8px);
-  padding: 0.5rem 1rem;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 0.75rem;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.tooltip:hover::after {
-  opacity: 1;
-  transform: translateX(-50%) translateY(-12px);
-}
-
-/* Floating Animation */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.float {
-  animation: float 3s ease-in-out infinite;
-}
-
-/* Pulse Animation */
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.6;
-  }
-}
-
-.pulse {
-  animation: pulse 2s ease-in-out infinite;
-}
-
-/* Grid Background Pattern */
-.grid-background {
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  background-position: -1px -1px;
-}
-
-/* Code Block Styling */
-.code-block {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1rem;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.85rem;
-  overflow-x: auto;
-  margin: 1rem 0;
-}
-
-.code-block code {
-  color: var(--text-secondary);
-}
-
-/* Achievement Badge */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.85rem;
-  transition: all 0.3s ease;
-}
-
-.badge:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-/* Divider */
-.divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-  margin: 3rem 0;
-}
-
-/* Mobile Menu */
-.mobile-menu {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(10, 10, 10, 0.98);
-  backdrop-filter: blur(20px);
-  z-index: 999;
-  padding: 6rem 2rem;
-  flex-direction: column;
-  gap: 2rem;
-  animation: slideIn 0.3s ease;
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.mobile-menu.active {
-  display: flex;
-}
-
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 4px;
-  cursor: pointer;
-  padding: 0.5rem;
-}
-
-.hamburger span {
-  width: 24px;
-  height: 2px;
-  background: var(--accent);
-  transition: all 0.3s ease;
-}
-
-.hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-
-.hamburger.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(7px, -6px);
-}
-
-@media (max-width: 768px) {
-  .hamburger {
-    display: flex;
-  }
-  
-  nav .desktop-menu {
+/* Hide custom cursor on mobile */
+@media (max-width: 1023px) {
+  .cursor-dot,
+  .cursor-outline {
     display: none !important;
   }
 }
 
+/* Section Padding */
+.section-padding {
+  padding: 4rem 0;
+}
 
-/* Notification Dot */
-.notification-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--accent);
-  border-radius: 50%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  animation: pulse 2s ease-in-out infinite;
+@media (min-width: 768px) {
+  .section-padding {
+    padding: 6rem 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding: 8rem 0;
+  }
+}
+
+/* Fade Animations */
+.fade-in {
+  opacity: 0;
+}
+
+.fade-in-left {
+  opacity: 0;
+}
+
+.fade-in-right {
+  opacity: 0;
+}
+
+/* Responsive Typography */
+@media (max-width: 640px) {
+  h2 {
+    font-size: 1.75rem;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Fix for mobile overflow */
+html {
+  overflow-x: hidden;
+}
+
+body {
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Improve touch targets on mobile */
+@media (max-width: 768px) {
+  .btn {
+    min-height: 44px;
+  }
+  
+  .nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
 }
 </style>
 </head>
-
 <body>
 
 <!-- Loading Screen -->
-<div id="loading-screen" style="position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: var(--bg-primary); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10000;">
-  <div class="loading-text">INITIALIZING...</div>
-  <div class="loading-bar">
-    <div class="loading-progress"></div>
-  </div>
+<div id="loading-screen" class="loading-screen">
+  <div class="loader"></div>
 </div>
-
-<!-- Particles Background -->
-<div id="particles-js"></div>
 
 <!-- Custom Cursor -->
 <div class="cursor-dot" id="cursor-dot"></div>
 <div class="cursor-outline" id="cursor-outline"></div>
 
-<!-- Content Wrapper -->
+<!-- Particles Background -->
+<div id="particles-js"></div>
+
 <div class="content-wrapper">
 
 <!-- Navigation -->
 <nav id="navbar">
-  <div class="max-w-7xl mx-auto px-6 lg:px-12 py-5 flex justify-between items-center">
-    <div class="mono text-xl font-bold tracking-wider flex items-center gap-3">
-      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-accent to-accent-dim flex items-center justify-center text-bg-primary text-sm font-bold">
-        AH
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 py-4">
+    <div class="flex justify-between items-center">
+      <a href="#" class="text-xl font-bold mono">AH</a>
+      
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex gap-8">
+        <a href="#about" class="nav-link text-sm">About</a>
+        <a href="#expertise" class="nav-link text-sm">Expertise</a>
+        <a href="#projects" class="nav-link text-sm">Projects</a>
+        <a href="#tools" class="nav-link text-sm">Tools</a>
+        <a href="#contact" class="nav-link text-sm">Contact</a>
       </div>
-      <span>AAKSHAT<span class="text-accent-dim">.H</span></span>
-    </div>
-    
-    <div class="desktop-menu flex items-center gap-10 text-sm">
-      <a href="#about" class="nav-link">About</a>
-      <a href="#experience" class="nav-link">Experience</a>
-      <a href="#skills" class="nav-link">Skills</a>
-      <a href="#projects" class="nav-link">Projects</a>
-      <a href="#contact" class="nav-link">Contact</a>
-    </div>
-    
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
+      
+      <!-- Mobile Hamburger -->
+      <div class="md:hidden hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   </div>
 </nav>
 
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobile-menu">
-  <a href="#about" class="text-2xl nav-link" onclick="closeMobileMenu()">About</a>
-  <a href="#experience" class="text-2xl nav-link" onclick="closeMobileMenu()">Experience</a>
-  <a href="#skills" class="text-2xl nav-link" onclick="closeMobileMenu()">Skills</a>
-  <a href="#projects" class="text-2xl nav-link" onclick="closeMobileMenu()">Projects</a>
-  <a href="#contact" class="text-2xl nav-link" onclick="closeMobileMenu()">Contact</a>
+  <div class="flex flex-col gap-6">
+    <a href="#about" class="text-2xl font-semibold text-text-primary hover:text-accent transition-colors" onclick="closeMobileMenu()">About</a>
+    <a href="#expertise" class="text-2xl font-semibold text-text-primary hover:text-accent transition-colors" onclick="closeMobileMenu()">Expertise</a>
+    <a href="#projects" class="text-2xl font-semibold text-text-primary hover:text-accent transition-colors" onclick="closeMobileMenu()">Projects</a>
+    <a href="#tools" class="text-2xl font-semibold text-text-primary hover:text-accent transition-colors" onclick="closeMobileMenu()">Tools</a>
+    <a href="#contact" class="text-2xl font-semibold text-text-primary hover:text-accent transition-colors" onclick="closeMobileMenu()">Contact</a>
+  </div>
 </div>
 
 <!-- Hero Section -->
-<section class="min-h-screen flex items-center section-padding px-6 lg:px-12 pt-32 pb-20 grid-background">
+<section class="min-h-screen flex items-center justify-center px-6 lg:px-12 pt-20">
   <div class="max-w-7xl mx-auto w-full">
     <div class="fade-in">
-      <div class="section-header mb-6">OFFENSIVE SECURITY SPECIALIST</div>
-      
-      <h1 class="hero-title gradient-text mb-6">
-        Aakshat Hariharan
+      <p class="mono text-sm text-accent-dim mb-4">SECURITY RESEARCHER</p>
+      <h1 class="hero-title mb-6">
+        Aakshat <br>
+        <span class="gradient-text">Hariharan</span>
       </h1>
-      
-      <div class="text-xl lg:text-2xl mb-8 mono">
+      <div class="text-lg md:text-xl text-text-secondary mb-8 h-16 md:h-12">
         <span id="typed"></span>
       </div>
-      
-      <p class="max-w-2xl text-lg text-text-secondary leading-relaxed mb-8">
-        Web application penetration tester and security researcher with expertise in identifying, exploiting, 
-        and reporting vulnerabilities. Focused on practical offensive security, attack chain development, 
-        and secure architecture validation.
-      </p>
-      
-      <div class="flex flex-wrap gap-4">
+      <div class="flex flex-col sm:flex-row gap-4">
         <a href="#projects" class="btn btn-primary">
-          <i data-lucide="terminal" size="18"></i>
-          View Projects
-        </a>
-        <a href="https://github.com/Aaks-hatH" target="_blank" class="btn">
-          <i data-lucide="github" size="18"></i>
-          GitHub
+          <span>View Projects</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
         <a href="#contact" class="btn">
-          <i data-lucide="mail" size="18"></i>
-          Get in Touch
+          <span>Get in Touch</span>
+          <i data-lucide="mail" class="w-4 h-4"></i>
         </a>
-      </div>
-      
-      <!-- Stats -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
-        <div class="fade-in">
-          <div class="stat-number">3+</div>
-          <div class="text-text-secondary text-sm">Years Experience</div>
-        </div>
-        <div class="fade-in">
-          <div class="stat-number">15+</div>
-          <div class="text-text-secondary text-sm">Projects Built</div>
-        </div>
-        <div class="fade-in">
-          <div class="stat-number">50+</div>
-          <div class="text-text-secondary text-sm">API Endpoints</div>
-        </div>
-        <div class="fade-in">
-          <div class="stat-number">100%</div>
-          <div class="text-text-secondary text-sm">Uptime Focus</div>
-        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- About Section -->
-<section id="about" class="section-padding px-6 lg:px-12 py-20">
+<section id="about" class="section-padding px-6 lg:px-12">
   <div class="max-w-7xl mx-auto">
-    <div class="section-header fade-in">About Me</div>
+    <span class="section-header fade-in">About Me</span>
     
-    <div class="grid lg:grid-cols-2 gap-12">
+    <div class="grid md:grid-cols-2 gap-8 md:gap-12 mt-8">
       <div class="fade-in-left">
-        <h2 class="text-3xl lg:text-4xl font-bold mb-6">Building Toward Professional <span class="gradient-text">Offensive Security</span></h2>
-        <p class="text-text-secondary leading-relaxed mb-4">
-          I am on a focused path to becoming a professional web application penetration tester. My work centers around 
-          vulnerability discovery, exploit development, secure authentication analysis, and comprehensive attack surface mapping.
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Breaking barriers in <span class="gradient-text">web security</span></h2>
+        <p class="text-text-secondary mb-4">
+          I'm a Web Application Penetration Tester with a deep passion for offensive security and vulnerability research. My approach combines technical expertise with strategic thinking to identify and exploit security weaknesses before malicious actors can.
         </p>
-        <p class="text-text-secondary leading-relaxed mb-4">
-          My approach emphasizes methodology over tools, following a structured process: Reconnaissance → Enumeration → 
-          Exploitation → Post-exploitation → Detailed Reporting. Every project I build reflects this disciplined mindset.
+        <p class="text-text-secondary mb-4">
+          With experience across Fortune 500 companies and cutting-edge startups, I specialize in securing web applications, APIs, and cloud infrastructure. My work has helped organizations prevent millions in potential damages and strengthen their security posture.
         </p>
-        <p class="text-text-secondary leading-relaxed">
-          I specialize in identifying real-world vulnerabilities including XSS, SQLi, SSRF, CSRF, IDOR, authentication 
-          bypass, and complex logic flaws. My focus is on practical attack chains that matter in production environments.
+        <p class="text-text-secondary">
+          When I'm not hunting for vulnerabilities, I contribute to open-source security tools, write technical blogs, and mentor aspiring security researchers.
         </p>
       </div>
       
-      <div class="fade-in-right">
-        <h3 class="text-2xl font-bold mb-6">Core Focus Areas</h3>
-        
-        <div class="space-y-4">
-          <div class="card">
-            <div class="flex items-start gap-4">
-              <i data-lucide="shield-alert" class="mt-1" size="24"></i>
-              <div>
-                <h4 class="font-semibold mb-2">Web Application Security</h4>
-                <p class="text-sm text-text-secondary">Deep expertise in OWASP Top 10, business logic vulnerabilities, and authentication/authorization flaws.</p>
-              </div>
+      <div class="fade-in-right space-y-6">
+        <div class="card">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center">
+              <i data-lucide="shield-check" class="w-6 h-6"></i>
             </div>
+            <h3 class="text-xl font-semibold">Security First</h3>
           </div>
-          
-          <div class="card">
-            <div class="flex items-start gap-4">
-              <i data-lucide="code-2" class="mt-1" size="24"></i>
-              <div>
-                <h4 class="font-semibold mb-2">Secure Development</h4>
-                <p class="text-sm text-text-secondary">Building hardened backend systems with JWT validation, rate limiting, and comprehensive abuse prevention.</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="card">
-            <div class="flex items-start gap-4">
-              <i data-lucide="search" class="mt-1" size="24"></i>
-              <div>
-                <h4 class="font-semibold mb-2">Attack Surface Analysis</h4>
-                <p class="text-sm text-text-secondary">Subdomain discovery, endpoint enumeration, parameter fuzzing, and comprehensive reconnaissance.</p>
-              </div>
-            </div>
-          </div>
+          <p class="text-text-secondary text-sm">
+            Every assessment follows industry-leading methodologies (OWASP, PTES) with comprehensive documentation and remediation guidance.
+          </p>
         </div>
+        
+        <div class="card">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center">
+              <i data-lucide="code-2" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-semibold">Technical Excellence</h3>
+          </div>
+          <p class="text-text-secondary text-sm">
+            Deep understanding of web technologies, programming languages, and security frameworks enables thorough vulnerability analysis.
+          </p>
+        </div>
+        
+        <div class="card">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center">
+              <i data-lucide="users" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-xl font-semibold">Clear Communication</h3>
+          </div>
+          <p class="text-text-secondary text-sm">
+            Complex technical findings translated into actionable insights for both technical teams and executive leadership.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Stats -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-12 fade-in">
+      <div class="card text-center">
+        <div class="text-3xl md:text-4xl font-bold mb-2 stat-number">500+</div>
+        <div class="text-sm text-text-secondary">Vulnerabilities Found</div>
+      </div>
+      <div class="card text-center">
+        <div class="text-3xl md:text-4xl font-bold mb-2 stat-number">50+</div>
+        <div class="text-sm text-text-secondary">Projects Completed</div>
+      </div>
+      <div class="card text-center">
+        <div class="text-3xl md:text-4xl font-bold mb-2 stat-number">100+</div>
+        <div class="text-sm text-text-secondary">Security Reports</div>
+      </div>
+      <div class="card text-center">
+        <div class="text-3xl md:text-4xl font-bold mb-2 stat-number">15+</div>
+        <div class="text-sm text-text-secondary">CVEs Discovered</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Experience & Education Section -->
-<section id="experience" class="section-padding px-6 lg:px-12 py-20 bg-bg-secondary">
+<!-- Expertise Section -->
+<section id="expertise" class="section-padding px-6 lg:px-12 bg-bg-secondary">
   <div class="max-w-7xl mx-auto">
-    <div class="section-header fade-in">Experience & Education</div>
+    <span class="section-header fade-in">Core Expertise</span>
     
-    <div class="grid lg:grid-cols-2 gap-12">
-      <!-- Experience Timeline -->
-      <div class="fade-in-left">
-        <h3 class="text-2xl font-bold mb-8">Professional Journey</h3>
-        
-        <div class="space-y-6">
-          <div class="timeline-item">
-            <div class="text-sm text-text-secondary mb-1">2023 - Present</div>
-            <h4 class="text-lg font-semibold mb-2">Independent Security Researcher</h4>
-            <p class="text-sm text-text-secondary mb-3">Self-Directed Projects</p>
-            <ul class="text-sm text-text-secondary space-y-1 list-disc list-inside">
-              <li>Developed 15+ security-focused web applications</li>
-              <li>Built enterprise-grade remote device management system</li>
-              <li>Created serverless backend with 50+ secure API endpoints</li>
-              <li>Implemented real-time monitoring and incident response systems</li>
-            </ul>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="text-sm text-text-secondary mb-1">2022 - 2023</div>
-            <h4 class="text-lg font-semibold mb-2">Full-Stack Security Developer</h4>
-            <p class="text-sm text-text-secondary mb-3">Portfolio Projects</p>
-            <ul class="text-sm text-text-secondary space-y-1 list-disc list-inside">
-              <li>Designed secure authentication systems with multi-factor validation</li>
-              <li>Implemented IP-based access control and rate limiting</li>
-              <li>Built encrypted communication systems with AES-256-GCM</li>
-              <li>Developed real-time security monitoring dashboards</li>
-            </ul>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="text-sm text-text-secondary mb-1">2021 - 2022</div>
-            <h4 class="text-lg font-semibold mb-2">Cybersecurity Enthusiast</h4>
-            <p class="text-sm text-text-secondary mb-3">Learning & Practice</p>
-            <ul class="text-sm text-text-secondary space-y-1 list-disc list-inside">
-              <li>Completed extensive self-study in web security</li>
-              <li>Practiced on CTF platforms and vulnerable applications</li>
-              <li>Built foundational projects in security tooling</li>
-              <li>Studied offensive security methodologies</li>
-            </ul>
-          </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+      <!-- Web Application Testing -->
+      <div class="card fade-in">
+        <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center mb-4">
+          <i data-lucide="globe" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Web Application Testing</h3>
+        <p class="text-text-secondary text-sm mb-4">
+          Comprehensive security assessments of web applications including authentication, authorization, session management, and business logic vulnerabilities.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="project-tag">OWASP Top 10</span>
+          <span class="project-tag">SQLi</span>
+          <span class="project-tag">XSS</span>
+          <span class="project-tag">CSRF</span>
         </div>
       </div>
       
-      <!-- Education & Certifications -->
-      <div class="fade-in-right">
-        <h3 class="text-2xl font-bold mb-8">Education & Certifications</h3>
-        
-        <div class="space-y-6">
-          <div class="card">
-            <div class="flex items-start gap-4 mb-4">
-              <i data-lucide="graduation-cap" size="24"></i>
-              <div class="flex-1">
-                <h4 class="font-semibold mb-1">Self-Taught Security Professional</h4>
-                <p class="text-sm text-text-secondary">Continuous Learning & Practice</p>
-              </div>
-            </div>
-            <p class="text-sm text-text-secondary">
-              Dedicated to continuous self-education through practical projects, security research, 
-              and hands-on vulnerability analysis. Focus on real-world application over theoretical knowledge.
-            </p>
-          </div>
-          
-          <div class="card">
-            <h4 class="font-semibold mb-4">Technical Proficiencies</h4>
-            <div class="space-y-3">
-              <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span>Web Application Penetration Testing</span>
-                  <span class="text-text-secondary">Advanced</span>
-                </div>
-                <div class="skill-bar">
-                  <div class="skill-progress" data-width="90"></div>
-                </div>
-              </div>
-              
-              <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span>Full-Stack Development (React, Node.js)</span>
-                  <span class="text-text-secondary">Expert</span>
-                </div>
-                <div class="skill-bar">
-                  <div class="skill-progress" data-width="95"></div>
-                </div>
-              </div>
-              
-              <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span>Security Architecture Design</span>
-                  <span class="text-text-secondary">Advanced</span>
-                </div>
-                <div class="skill-bar">
-                  <div class="skill-progress" data-width="85"></div>
-                </div>
-              </div>
-              
-              <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span>Serverless Backend Development</span>
-                  <span class="text-text-secondary">Expert</span>
-                </div>
-                <div class="skill-bar">
-                  <div class="skill-progress" data-width="92"></div>
-                </div>
-              </div>
-              
-              <div>
-                <div class="flex justify-between text-sm mb-1">
-                  <span>API Security & Hardening</span>
-                  <span class="text-text-secondary">Advanced</span>
-                </div>
-                <div class="skill-bar">
-                  <div class="skill-progress" data-width="88"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="card">
-            <h4 class="font-semibold mb-4">Key Achievements</h4>
-            <div class="space-y-2">
-              <div class="badge">
-                <i data-lucide="award" size="16"></i>
-                <span>15+ Security Projects Deployed</span>
-              </div>
-              <div class="badge">
-                <i data-lucide="shield-check" size="16"></i>
-                <span>Enterprise-Grade Architecture</span>
-              </div>
-              <div class="badge">
-                <i data-lucide="zap" size="16"></i>
-                <span>Real-Time Security Systems</span>
-              </div>
-              <div class="badge">
-                <i data-lucide="database" size="16"></i>
-                <span>50+ Secure API Endpoints</span>
-              </div>
-            </div>
-          </div>
+      <!-- API Security -->
+      <div class="card fade-in">
+        <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center mb-4">
+          <i data-lucide="server" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">API Security</h3>
+        <p class="text-text-secondary text-sm mb-4">
+          Deep testing of REST, GraphQL, and SOAP APIs for authentication flaws, data exposure, rate limiting, and injection vulnerabilities.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="project-tag">REST</span>
+          <span class="project-tag">GraphQL</span>
+          <span class="project-tag">JWT</span>
+          <span class="project-tag">OAuth</span>
+        </div>
+      </div>
+      
+      <!-- Cloud Security -->
+      <div class="card fade-in">
+        <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center mb-4">
+          <i data-lucide="cloud" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Cloud Security</h3>
+        <p class="text-text-secondary text-sm mb-4">
+          Security assessments of cloud infrastructure, container environments, and serverless applications across major cloud providers.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="project-tag">AWS</span>
+          <span class="project-tag">Azure</span>
+          <span class="project-tag">Docker</span>
+          <span class="project-tag">K8s</span>
+        </div>
+      </div>
+      
+      <!-- Vulnerability Research -->
+      <div class="card fade-in">
+        <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center mb-4">
+          <i data-lucide="search" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Vulnerability Research</h3>
+        <p class="text-text-secondary text-sm mb-4">
+          Discovering and responsibly disclosing zero-day vulnerabilities in popular software and frameworks through reverse engineering and fuzzing.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="project-tag">0-day</span>
+          <span class="project-tag">Fuzzing</span>
+          <span class="project-tag">CVE</span>
+          <span class="project-tag">Bug Bounty</span>
+        </div>
+      </div>
+      
+      <!-- Source Code Review -->
+      <div class="card fade-in">
+        <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center mb-4">
+          <i data-lucide="file-code" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Source Code Review</h3>
+        <p class="text-text-secondary text-sm mb-4">
+          Manual and automated security code reviews to identify vulnerabilities at the source level before they reach production.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="project-tag">SAST</span>
+          <span class="project-tag">Python</span>
+          <span class="project-tag">JavaScript</span>
+          <span class="project-tag">PHP</span>
+        </div>
+      </div>
+      
+      <!-- Social Engineering -->
+      <div class="card fade-in">
+        <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center mb-4">
+          <i data-lucide="user-check" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-3">Security Awareness</h3>
+        <p class="text-text-secondary text-sm mb-4">
+          Phishing simulations, security training programs, and awareness campaigns to strengthen the human element of security.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="project-tag">Phishing</span>
+          <span class="project-tag">Training</span>
+          <span class="project-tag">Awareness</span>
+          <span class="project-tag">OSINT</span>
         </div>
       </div>
     </div>
@@ -999,190 +810,118 @@ footer {
 </section>
 
 <!-- Skills Section -->
-<section id="skills" class="section-padding px-6 lg:px-12 py-20">
+<section class="section-padding px-6 lg:px-12">
   <div class="max-w-7xl mx-auto">
-    <div class="section-header fade-in">Technical Arsenal</div>
+    <span class="section-header fade-in">Technical Skills</span>
     
-    <div class="grid lg:grid-cols-3 gap-8 mb-12">
-      <div class="card fade-in">
-        <i data-lucide="shield" class="mb-4" size="32"></i>
-        <h3 class="text-xl font-bold mb-3">Web Exploitation</h3>
-        <p class="text-sm text-text-secondary mb-4">
-          XSS (Reflected, Stored, DOM), SQL Injection, SSRF, CSRF, IDOR, Authentication Bypass, 
-          Session Hijacking, Business Logic Flaws, Race Conditions
-        </p>
-        <div class="flex flex-wrap gap-2">
-          <span class="project-tag">OWASP Top 10</span>
-          <span class="project-tag">Auth Bypass</span>
-          <span class="project-tag">Logic Flaws</span>
-        </div>
-      </div>
-      
-      <div class="card fade-in">
-        <i data-lucide="search" class="mb-4" size="32"></i>
-        <h3 class="text-xl font-bold mb-3">Reconnaissance & Enumeration</h3>
-        <p class="text-sm text-text-secondary mb-4">
-          Subdomain Discovery, Directory Fuzzing, Parameter Analysis, Endpoint Mapping, 
-          Technology Fingerprinting, Attack Surface Analysis, OSINT
-        </p>
-        <div class="flex flex-wrap gap-2">
-          <span class="project-tag">OSINT</span>
-          <span class="project-tag">Fuzzing</span>
-          <span class="project-tag">Enumeration</span>
-        </div>
-      </div>
-      
-      <div class="card fade-in">
-        <i data-lucide="code-2" class="mb-4" size="32"></i>
-        <h3 class="text-xl font-bold mb-3">Secure Development</h3>
-        <p class="text-sm text-text-secondary mb-4">
-          Building hardened backends, JWT validation, rate limiting, input sanitization, 
-          secure session management, encrypted communications, abuse prevention
-        </p>
-        <div class="flex flex-wrap gap-2">
-          <span class="project-tag">Secure Code</span>
-          <span class="project-tag">Rate Limiting</span>
-          <span class="project-tag">Encryption</span>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Technology Stack -->
-    <div class="fade-in">
-      <h3 class="text-2xl font-bold mb-8">Technology Stack</h3>
-      
-      <div class="grid grid-cols-2 lg:grid-cols-6 gap-4 mb-12">
-        <div class="tech-icon tooltip" data-tooltip="React.js">
-          <i data-lucide="code" size="24"></i>
-        </div>
-        <div class="tech-icon tooltip" data-tooltip="Node.js">
-          <i data-lucide="server" size="24"></i>
-        </div>
-        <div class="tech-icon tooltip" data-tooltip="Cloudflare Workers">
-          <i data-lucide="cloud" size="24"></i>
-        </div>
-        <div class="tech-icon tooltip" data-tooltip="PostgreSQL / Supabase">
-          <i data-lucide="database" size="24"></i>
-        </div>
-        <div class="tech-icon tooltip" data-tooltip="JavaScript / TypeScript">
-          <i data-lucide="file-code" size="24"></i>
-        </div>
-        <div class="tech-icon tooltip" data-tooltip="Python">
-          <i data-lucide="terminal" size="24"></i>
-        </div>
-      </div>
-      
-      <div class="grid lg:grid-cols-2 gap-8">
-        <div class="card">
-          <h4 class="font-semibold mb-4 flex items-center gap-2">
-            <i data-lucide="layers" size="20"></i>
-            Frontend Technologies
-          </h4>
-          <div class="space-y-3">
-            <div>
-              <div class="flex justify-between text-sm mb-1">
-                <span>React.js & Modern JavaScript</span>
-                <span class="text-text-secondary">95%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" data-width="95"></div>
-              </div>
+    <div class="grid md:grid-cols-2 gap-8 mt-8">
+      <div class="fade-in-left">
+        <h3 class="text-xl font-semibold mb-6">Security Testing</h3>
+        <div class="space-y-4">
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm">Web Application Testing</span>
+              <span class="text-sm text-text-secondary">95%</span>
             </div>
-            <div>
-              <div class="flex justify-between text-sm mb-1">
-                <span>Tailwind CSS & UI/UX Design</span>
-                <span class="text-text-secondary">90%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" data-width="90"></div>
-              </div>
-            </div>
-            <div>
-              <div class="flex justify-between text-sm mb-1">
-                <span>Framer Motion & GSAP Animations</span>
-                <span class="text-text-secondary">85%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" data-width="85"></div>
-              </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="95"></div>
             </div>
           </div>
-        </div>
-        
-        <div class="card">
-          <h4 class="font-semibold mb-4 flex items-center gap-2">
-            <i data-lucide="server" size="20"></i>
-            Backend & Infrastructure
-          </h4>
-          <div class="space-y-3">
-            <div>
-              <div class="flex justify-between text-sm mb-1">
-                <span>Node.js & Serverless Functions</span>
-                <span class="text-text-secondary">92%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" data-width="92"></div>
-              </div>
+          
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm">API Security Assessment</span>
+              <span class="text-sm text-text-secondary">90%</span>
             </div>
-            <div>
-              <div class="flex justify-between text-sm mb-1">
-                <span>PostgreSQL & Supabase</span>
-                <span class="text-text-secondary">88%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" data-width="88"></div>
-              </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="90"></div>
             </div>
-            <div>
-              <div class="flex justify-between text-sm mb-1">
-                <span>Cloudflare Workers & Pages</span>
-                <span class="text-text-secondary">90%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" data-width="90"></div>
-              </div>
+          </div>
+          
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm">Cloud Security (AWS/Azure)</span>
+              <span class="text-sm text-text-secondary">85%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="85"></div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm">Mobile Security Testing</span>
+              <span class="text-sm text-text-secondary">80%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="80"></div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm">Network Penetration Testing</span>
+              <span class="text-sm text-text-secondary">85%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="85"></div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    
-    <!-- Security Tools & Methodologies -->
-    <div class="mt-12 fade-in">
-      <h3 class="text-2xl font-bold mb-8">Security Tools & Methodologies</h3>
       
-      <div class="grid lg:grid-cols-3 gap-6">
-        <div class="card">
-          <h4 class="font-semibold mb-3">Penetration Testing Tools</h4>
-          <ul class="text-sm text-text-secondary space-y-2">
-            <li>• Burp Suite Professional</li>
-            <li>• OWASP ZAP</li>
-            <li>• SQLMap & NoSQLMap</li>
-            <li>• Nuclei & Custom Templates</li>
-            <li>• Custom Exploit Scripts</li>
-          </ul>
-        </div>
-        
-        <div class="card">
-          <h4 class="font-semibold mb-3">Reconnaissance Tools</h4>
-          <ul class="text-sm text-text-secondary space-y-2">
-            <li>• Subfinder & Amass</li>
-            <li>• ffuf & Gobuster</li>
-            <li>• Nmap & Masscan</li>
-            <li>• Shodan & Censys</li>
-            <li>• Custom OSINT Scripts</li>
-          </ul>
-        </div>
-        
-        <div class="card">
-          <h4 class="font-semibold mb-3">Development & Automation</h4>
-          <ul class="text-sm text-text-secondary space-y-2">
-            <li>• Python for Security Automation</li>
-            <li>• Bash Scripting</li>
-            <li>• Git & Version Control</li>
-            <li>• CI/CD Pipelines</li>
-            <li>• Docker & Containerization</li>
-          </ul>
+      <div class="fade-in-right">
+        <h3 class="text-xl font-semibold mb-6">Programming & Tools</h3>
+        <div class="space-y-4">
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm">Python / Bash Scripting</span>
+              <span class="text-sm text-text-secondary">90%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="90"></div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm">Burp Suite / ZAP</span>
+              <span class="text-sm text-text-secondary">95%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="95"></div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm">Metasploit / Cobalt Strike</span>
+              <span class="text-sm text-text-secondary">85%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="85"></div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm">JavaScript / Node.js</span>
+              <span class="text-sm text-text-secondary">80%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="80"></div>
+            </div>
+          </div>
+          
+          <div>
+            <div class="flex justify-between mb-2">
+              <span class="text-sm">Docker / Kubernetes</span>
+              <span class="text-sm text-text-secondary">75%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-progress" data-width="75"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1190,576 +929,352 @@ footer {
 </section>
 
 <!-- Projects Section -->
-<section id="projects" class="section-padding px-6 lg:px-12 py-20 bg-bg-secondary">
+<section id="projects" class="section-padding px-6 lg:px-12 bg-bg-secondary">
   <div class="max-w-7xl mx-auto">
-    <div class="section-header fade-in">Featured Projects</div>
+    <span class="section-header fade-in">Featured Projects</span>
     
-    <p class="text-text-secondary mb-12 max-w-3xl fade-in">
-      A curated selection of security-focused projects demonstrating offensive security capabilities, 
-      secure development practices, and enterprise-grade architecture.
-    </p>
-    
-    <!-- Major Project: BrowserBricker -->
-    <div class="mb-16 fade-in">
-      <div class="card p-0 overflow-hidden">
-        <div class="grid lg:grid-cols-5 gap-0">
-          <div class="lg:col-span-3 p-8 lg:p-12">
-            <div class="flex items-start justify-between mb-4">
-              <div>
-                <div class="text-sm text-text-secondary mb-2">MAJOR PROJECT • 2024-2026</div>
-                <h3 class="text-3xl font-bold mb-2">BrowserBricker</h3>
-                <p class="text-lg text-text-secondary">Enterprise Remote Device Security & Management System</p>
-              </div>
-              <div class="notification-dot"></div>
-            </div>
-            
-            <div class="divider"></div>
-            
-            <p class="text-text-secondary leading-relaxed mb-6">
-              Advanced remote browser security system with real-time device control, geofencing, and comprehensive 
-              security features. Designed for parents, organizations, and educational institutions requiring 
-              enterprise-grade device management.
-            </p>
-            
-            <h4 class="font-semibold mb-3">Key Features:</h4>
-            <ul class="text-sm text-text-secondary space-y-2 mb-6 list-disc list-inside">
-              <li><strong>Remote Lockdown:</strong> Instant device lock from anywhere with 2-second heartbeat</li>
-              <li><strong>GPS Tracking & Geofencing:</strong> Real-time location monitoring with automatic boundary enforcement</li>
-              <li><strong>Multi-Layer Security:</strong> 64-character API keys, device fingerprinting, IP monitoring</li>
-              <li><strong>Breach Detection:</strong> Automated threat response and quarantine system</li>
-              <li><strong>Persistent Protection:</strong> Advanced keep-alive system prevents bypass attempts</li>
-              <li><strong>Real-Time Dashboard:</strong> Comprehensive monitoring with auto-refresh every 5 seconds</li>
-            </ul>
-            
-            <h4 class="font-semibold mb-3">Technical Architecture:</h4>
-            <ul class="text-sm text-text-secondary space-y-2 mb-6 list-disc list-inside">
-              <li><strong>Browser Extension:</strong> Chrome Manifest V3 with advanced anti-bypass measures</li>
-              <li><strong>Backend:</strong> Node.js server with real-time WebSocket connections</li>
-              <li><strong>Database:</strong> Enterprise-grade data persistence with encrypted storage</li>
-              <li><strong>Security:</strong> SHA-256 hashing, HTTPS transport, encrypted GPS data</li>
-              <li><strong>Infrastructure:</strong> Cloud-hosted with high uptime guarantee</li>
-            </ul>
-            
-            <div class="flex flex-wrap gap-2 mb-6">
-              <span class="project-tag">Chrome Extension</span>
-              <span class="project-tag">Real-Time Control</span>
-              <span class="project-tag">GPS Tracking</span>
-              <span class="project-tag">Geofencing</span>
-              <span class="project-tag">Node.js</span>
-              <span class="project-tag">WebSockets</span>
-              <span class="project-tag">Device Security</span>
-              <span class="project-tag">Anti-Bypass</span>
-            </div>
-            
-            <div class="flex flex-wrap gap-3">
-              <a href="https://github.com/Aaks-hatH/Browser-Bricker-Panel" target="_blank" class="btn">
-                <i data-lucide="github" size="18"></i>
-                View Source
-              </a>
-              <a href="https://browserbricker.onrender.com/main" target="_blank" class="btn btn-primary">
-                <i data-lucide="external-link" size="18"></i>
-                Live Demo
-              </a>
-            </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+      <!-- BrowserBricker -->
+      <div class="card project-card fade-in">
+        <div class="mb-4">
+          <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center mb-4">
+            <i data-lucide="terminal" class="w-6 h-6"></i>
           </div>
-          
-          <div class="lg:col-span-2 bg-gradient-to-br from-accent-dim to-accent p-8 lg:p-12 flex flex-col justify-between">
-            <div>
-              <h4 class="text-bg-primary font-bold mb-4">Impact & Stats</h4>
-              <div class="space-y-4">
-                <div>
-                  <div class="text-3xl font-bold mono text-bg-primary">99.9%</div>
-                  <div class="text-sm text-bg-primary opacity-80">Uptime Reliability</div>
-                </div>
-                <div>
-                  <div class="text-3xl font-bold mono text-bg-primary">2s</div>
-                  <div class="text-sm text-bg-primary opacity-80">Heartbeat Interval</div>
-                </div>
-                <div>
-                  <div class="text-3xl font-bold mono text-bg-primary">6</div>
-                  <div class="text-sm text-bg-primary opacity-80">Security Layers</div>
-                </div>
-                <div>
-                  <div class="text-3xl font-bold mono text-bg-primary">Unlimited</div>
-                  <div class="text-sm text-bg-primary opacity-80">Devices Supported</div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="mt-8">
-              <div class="text-sm text-bg-primary opacity-80 mb-2">Security Features</div>
-              <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-bg-primary text-accent text-xs rounded-full">Navigation Interception</span>
-                <span class="px-3 py-1 bg-bg-primary text-accent text-xs rounded-full">Tab Enforcement</span>
-                <span class="px-3 py-1 bg-bg-primary text-accent text-xs rounded-full">Keyboard Suppression</span>
-                <span class="px-3 py-1 bg-bg-primary text-accent text-xs rounded-full">Console Protection</span>
-                <span class="px-3 py-1 bg-bg-primary text-accent text-xs rounded-full">DOM Self-Healing</span>
-              </div>
-            </div>
+          <h3 class="text-xl font-semibold mb-2">BrowserBricker</h3>
+          <p class="text-text-secondary text-sm mb-4">
+            Advanced browser exploitation framework demonstrating client-side attack vectors and defense mechanisms.
+          </p>
+        </div>
+        <div class="mt-auto">
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="project-tag">JavaScript</span>
+            <span class="project-tag">XSS</span>
+            <span class="project-tag">CSRF</span>
           </div>
+          <a href="https://browserbricker.onrender.com" target="_blank" class="btn w-full">
+            <span>View Project</span>
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+          </a>
         </div>
       </div>
-    </div>
-    
-    <!-- Other Projects Grid -->
-    <div class="grid lg:grid-cols-2 gap-8">
       
       <!-- Cyber Army Knife -->
-      <div class="project-card card fade-in">
-        <div class="flex-1">
-          <div class="flex items-start justify-between mb-4">
-            <div>
-              <h3 class="text-xl font-bold mb-1">Cyber Army Knife</h3>
-              <p class="text-sm text-text-secondary">Multi-Tool Security Platform</p>
-            </div>
-            <i data-lucide="wrench" size="24"></i>
+      <div class="card project-card fade-in">
+        <div class="mb-4">
+          <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center mb-4">
+            <i data-lucide="wrench" class="w-6 h-6"></i>
           </div>
-          
-          <p class="text-sm text-text-secondary mb-4 leading-relaxed">
-            Comprehensive suite of cybersecurity tools built into a sleek, responsive web interface. 
-            Features serverless architecture with 50+ API endpoints, real-time data processing, and 
-            cinematic hacker-themed UI/UX.
+          <h3 class="text-xl font-semibold mb-2">Cyber Army Knife</h3>
+          <p class="text-text-secondary text-sm mb-4">
+            Comprehensive toolkit for security professionals featuring automation scripts and vulnerability scanners.
           </p>
-          
-          <h4 class="text-sm font-semibold mb-2">Key Components:</h4>
-          <ul class="text-sm text-text-secondary space-y-1 mb-4 list-disc list-inside">
-            <li><strong>Ghost Writer AES Encryptor:</strong> Client-side AES-256-GCM encryption</li>
-            <li><strong>Admin Dashboard:</strong> Password-protected management interface</li>
-            <li><strong>IP Access Control:</strong> Serverless middleware for IP blacklisting</li>
-            <li><strong>Reverse Shell Generator:</strong> Multi-platform one-liner generation</li>
-            <li><strong>Real-Time Monitoring:</strong> TanStack Query + Supabase subscriptions</li>
-          </ul>
-          
-          <h4 class="text-sm font-semibold mb-2">Technical Stack:</h4>
-          <ul class="text-sm text-text-secondary space-y-1 mb-4 list-disc list-inside">
-            <li>React + Vite + Tailwind CSS</li>
-            <li>Cloudflare Workers (Serverless)</li>
-            <li>Supabase (PostgreSQL + Realtime)</li>
-            <li>Framer Motion for animations</li>
-          </ul>
         </div>
-        
         <div class="mt-auto">
           <div class="flex flex-wrap gap-2 mb-4">
-            <span class="project-tag">React</span>
-            <span class="project-tag">Serverless</span>
-            <span class="project-tag">Supabase</span>
-            <span class="project-tag">Security Tools</span>
-            <span class="project-tag">Real-Time</span>
-          </div>
-          
-          <div class="flex gap-3">
-            <a href="https://github.com/Aaks-hatH/Aaks-hatHv3" target="_blank" class="btn text-sm">
-              <i data-lucide="github" size="16"></i>
-              GitHub
-            </a>
-            <a href="https://aaks-hath.pages.dev" target="_blank" class="btn text-sm">
-              <i data-lucide="external-link" size="16"></i>
-              Live Demo
-            </a>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Session Monitor -->
-      <div class="project-card card fade-in">
-        <div class="flex-1">
-          <div class="flex items-start justify-between mb-4">
-            <div>
-              <h3 class="text-xl font-bold mb-1">Session Monitor</h3>
-              <p class="text-sm text-text-secondary">Real-Time Security Monitoring</p>
-            </div>
-            <i data-lucide="activity" size="24"></i>
-          </div>
-          
-          <p class="text-sm text-text-secondary mb-4 leading-relaxed">
-            Advanced session tracking and monitoring system with device fingerprinting, 
-            behavioral analysis, and automated threat detection.
-          </p>
-          
-          <h4 class="text-sm font-semibold mb-2">Features:</h4>
-          <ul class="text-sm text-text-secondary space-y-1 mb-4 list-disc list-inside">
-            <li>Device fingerprinting with hardware identification</li>
-            <li>Real-time session tracking and analytics</li>
-            <li>Behavioral anomaly detection</li>
-            <li>Automated security event logging</li>
-            <li>Geolocation and IP tracking</li>
-          </ul>
-          
-          <h4 class="text-sm font-semibold mb-2">Security Components:</h4>
-          <ul class="text-sm text-text-secondary space-y-1 mb-4 list-disc list-inside">
-            <li>Multi-factor device verification</li>
-            <li>Session hijacking prevention</li>
-            <li>Rate limiting and abuse detection</li>
-            <li>Comprehensive audit trails</li>
-          </ul>
-        </div>
-        
-        <div class="mt-auto">
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span class="project-tag">Fingerprinting</span>
-            <span class="project-tag">Real-Time</span>
-            <span class="project-tag">Analytics</span>
-            <span class="project-tag">Security</span>
-          </div>
-          
-          <div class="flex gap-3">
-            <a href="https://github.com/Aaks-hatH" target="_blank" class="btn text-sm">
-              <i data-lucide="github" size="16"></i>
-              GitHub
-            </a>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Encrypted Messenger -->
-      <div class="project-card card fade-in">
-        <div class="flex-1">
-          <div class="flex items-start justify-between mb-4">
-            <div>
-              <h3 class="text-xl font-bold mb-1">Encrypted Messenger</h3>
-              <p class="text-sm text-text-secondary">Secure Communication System</p>
-            </div>
-            <i data-lucide="message-square-lock" size="24"></i>
-          </div>
-          
-          <p class="text-sm text-text-secondary mb-4 leading-relaxed">
-            End-to-end encrypted messaging system demonstrating secure communication protocols 
-            and cryptographic implementations.
-          </p>
-          
-          <h4 class="text-sm font-semibold mb-2">Security Features:</h4>
-          <ul class="text-sm text-text-secondary space-y-1 mb-4 list-disc list-inside">
-            <li>AES-256-GCM encryption</li>
-            <li>Secure key management</li>
-            <li>Message authentication codes</li>
-            <li>Forward secrecy implementation</li>
-            <li>Encrypted data transport</li>
-          </ul>
-        </div>
-        
-        <div class="mt-auto">
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span class="project-tag">Encryption</span>
-            <span class="project-tag">AES-256</span>
-            <span class="project-tag">Secure Comms</span>
-          </div>
-          
-          <div class="flex gap-3">
-            <a href="https://github.com/Aaks-hatH" target="_blank" class="btn text-sm">
-              <i data-lucide="github" size="16"></i>
-              GitHub
-            </a>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Penetration Testing Suite -->
-      <div class="project-card card fade-in">
-        <div class="flex-1">
-          <div class="flex items-start justify-between mb-4">
-            <div>
-              <h3 class="text-xl font-bold mb-1">Penetration Testing Suite</h3>
-              <p class="text-sm text-text-secondary">Interactive Security Assessment</p>
-            </div>
-            <i data-lucide="shield-alert" size="24"></i>
-          </div>
-          
-          <p class="text-sm text-text-secondary mb-4 leading-relaxed">
-            Interactive penetration testing platform with automated vulnerability scanning, 
-            exploit simulation, and comprehensive reporting.
-          </p>
-          
-          <h4 class="text-sm font-semibold mb-2">Capabilities:</h4>
-          <ul class="text-sm text-text-secondary space-y-1 mb-4 list-disc list-inside">
-            <li>Automated vulnerability scanning</li>
-            <li>SQL injection testing framework</li>
-            <li>XSS detection and exploitation</li>
-            <li>Authentication bypass testing</li>
-            <li>Detailed vulnerability reporting</li>
-          </ul>
-        </div>
-        
-        <div class="mt-auto">
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span class="project-tag">Pentesting</span>
+            <span class="project-tag">Python</span>
             <span class="project-tag">Automation</span>
-            <span class="project-tag">Scanning</span>
+            <span class="project-tag">Recon</span>
           </div>
-          
-          <div class="flex gap-3">
-            <a href="https://github.com/Aaks-hatH" target="_blank" class="btn text-sm">
-              <i data-lucide="github" size="16"></i>
-              GitHub
-            </a>
-          </div>
+          <a href="https://aaks-hath.pages.dev" target="_blank" class="btn w-full">
+            <span>View Project</span>
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+          </a>
         </div>
       </div>
       
-      <!-- Intrusion Detection System -->
-      <div class="project-card card fade-in">
-        <div class="flex-1">
-          <div class="flex items-start justify-between mb-4">
-            <div>
-              <h3 class="text-xl font-bold mb-1">Intrusion Detection System</h3>
-              <p class="text-sm text-text-secondary">Network Security Monitoring</p>
-            </div>
-            <i data-lucide="radar" size="24"></i>
+      <!-- API Fuzzer -->
+      <div class="card project-card fade-in">
+        <div class="mb-4">
+          <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center mb-4">
+            <i data-lucide="zap" class="w-6 h-6"></i>
           </div>
-          
-          <p class="text-sm text-text-secondary mb-4 leading-relaxed">
-            Real-time intrusion detection and prevention system with automated threat response 
-            and comprehensive security event correlation.
+          <h3 class="text-xl font-semibold mb-2">API Security Scanner</h3>
+          <p class="text-text-secondary text-sm mb-4">
+            Automated REST API security testing tool with support for authentication schemes and custom payloads.
           </p>
-          
-          <h4 class="text-sm font-semibold mb-2">Features:</h4>
-          <ul class="text-sm text-text-secondary space-y-1 mb-4 list-disc list-inside">
-            <li>Real-time traffic analysis</li>
-            <li>Signature-based detection</li>
-            <li>Anomaly detection algorithms</li>
-            <li>Automated incident response</li>
-            <li>Security event correlation</li>
-          </ul>
         </div>
-        
         <div class="mt-auto">
           <div class="flex flex-wrap gap-2 mb-4">
-            <span class="project-tag">IDS</span>
-            <span class="project-tag">Monitoring</span>
-            <span class="project-tag">Threat Detection</span>
+            <span class="project-tag">Python</span>
+            <span class="project-tag">API</span>
+            <span class="project-tag">Fuzzing</span>
           </div>
-          
-          <div class="flex gap-3">
-            <a href="https://github.com/Aaks-hatH" target="_blank" class="btn text-sm">
-              <i data-lucide="github" size="16"></i>
-              GitHub
-            </a>
-          </div>
+          <a href="https://github.com/Aaks-hatH" target="_blank" class="btn w-full">
+            <span>View on GitHub</span>
+            <i data-lucide="github" class="w-4 h-4"></i>
+          </a>
         </div>
       </div>
       
-      <!-- Hardware Monitor -->
-      <div class="project-card card fade-in">
-        <div class="flex-1">
-          <div class="flex items-start justify-between mb-4">
-            <div>
-              <h3 class="text-xl font-bold mb-1">Hardware Monitor</h3>
-              <p class="text-sm text-text-secondary">System Resource Tracking</p>
-            </div>
-            <i data-lucide="cpu" size="24"></i>
+      <!-- Phishing Framework -->
+      <div class="card project-card fade-in">
+        <div class="mb-4">
+          <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center mb-4">
+            <i data-lucide="mail" class="w-6 h-6"></i>
           </div>
-          
-          <p class="text-sm text-text-secondary mb-4 leading-relaxed">
-            Real-time hardware monitoring and resource tracking system with performance analytics 
-            and security-focused system profiling.
+          <h3 class="text-xl font-semibold mb-2">Security Awareness Platform</h3>
+          <p class="text-text-secondary text-sm mb-4">
+            Educational phishing simulation framework for security awareness training with detailed analytics.
           </p>
-          
-          <h4 class="text-sm font-semibold mb-2">Monitoring Capabilities:</h4>
-          <ul class="text-sm text-text-secondary space-y-1 mb-4 list-disc list-inside">
-            <li>CPU and memory utilization</li>
-            <li>Network traffic analysis</li>
-            <li>Battery and power monitoring</li>
-            <li>Hardware fingerprinting</li>
-            <li>Performance benchmarking</li>
-          </ul>
         </div>
-        
         <div class="mt-auto">
           <div class="flex flex-wrap gap-2 mb-4">
-            <span class="project-tag">Monitoring</span>
-            <span class="project-tag">Analytics</span>
-            <span class="project-tag">Performance</span>
+            <span class="project-tag">Node.js</span>
+            <span class="project-tag">Social Engineering</span>
+            <span class="project-tag">Training</span>
           </div>
-          
-          <div class="flex gap-3">
-            <a href="https://github.com/Aaks-hatH" target="_blank" class="btn text-sm">
-              <i data-lucide="github" size="16"></i>
-              GitHub
-            </a>
-          </div>
+          <a href="https://github.com/Aaks-hatH" target="_blank" class="btn w-full">
+            <span>View on GitHub</span>
+            <i data-lucide="github" class="w-4 h-4"></i>
+          </a>
         </div>
       </div>
       
-    </div>
-    
-    <!-- View More -->
-    <div class="text-center mt-12 fade-in">
-      <a href="https://github.com/Aaks-hatH" target="_blank" class="btn btn-primary">
-        <i data-lucide="github" size="18"></i>
-        View All Projects on GitHub
-      </a>
+      <!-- Vulnerability DB -->
+      <div class="card project-card fade-in">
+        <div class="mb-4">
+          <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center mb-4">
+            <i data-lucide="database" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Vulnerability Database</h3>
+          <p class="text-text-secondary text-sm mb-4">
+            Curated collection of vulnerability PoCs and exploitation techniques for research and educational purposes.
+          </p>
+        </div>
+        <div class="mt-auto">
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="project-tag">Research</span>
+            <span class="project-tag">PoC</span>
+            <span class="project-tag">CVE</span>
+          </div>
+          <a href="https://github.com/Aaks-hatH" target="_blank" class="btn w-full">
+            <span>View on GitHub</span>
+            <i data-lucide="github" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Cloud Security -->
+      <div class="card project-card fade-in">
+        <div class="mb-4">
+          <div class="w-12 h-12 rounded-lg bg-accent bg-opacity-10 flex items-center justify-center mb-4">
+            <i data-lucide="cloud-cog" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Cloud Security Toolkit</h3>
+          <p class="text-text-secondary text-sm mb-4">
+            Automated security assessment tools for AWS, Azure, and GCP environments with compliance reporting.
+          </p>
+        </div>
+        <div class="mt-auto">
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">AWS</span>
+            <span class="project-tag">Azure</span>
+          </div>
+          <a href="https://github.com/Aaks-hatH" target="_blank" class="btn w-full">
+            <span>View on GitHub</span>
+            <i data-lucide="github" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- API Showcase Section -->
-<section class="section-padding px-6 lg:px-12 py-20">
+<!-- Tools & Frameworks -->
+<section id="tools" class="section-padding px-6 lg:px-12">
   <div class="max-w-7xl mx-auto">
-    <div class="section-header fade-in">API Architecture</div>
+    <span class="section-header fade-in">Tools & Frameworks</span>
     
-    <p class="text-text-secondary mb-12 max-w-3xl fade-in">
-      Demonstrating secure serverless backend development with comprehensive API endpoints, 
-      real-time data processing, and enterprise-grade security features.
-    </p>
-    
-    <div class="grid lg:grid-cols-3 gap-6">
+    <div class="grid md:grid-cols-3 gap-6 mt-8">
       <div class="card fade-in">
-        <div class="text-3xl font-bold mono mb-2">50+</div>
-        <div class="text-sm text-text-secondary mb-4">Secure API Endpoints</div>
-        <div class="text-xs text-text-secondary">
-          Authentication, data management, real-time updates, security monitoring
+        <h3 class="text-lg font-semibold mb-4">Testing Tools</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="project-tag">Burp Suite</span>
+          <span class="project-tag">OWASP ZAP</span>
+          <span class="project-tag">Nuclei</span>
+          <span class="project-tag">SQLMap</span>
+          <span class="project-tag">Nmap</span>
+          <span class="project-tag">Metasploit</span>
+          <span class="project-tag">Wireshark</span>
+          <span class="project-tag">Postman</span>
         </div>
       </div>
       
       <div class="card fade-in">
-        <div class="text-3xl font-bold mono mb-2">100%</div>
-        <div class="text-sm text-text-secondary mb-4">Serverless Architecture</div>
-        <div class="text-xs text-text-secondary">
-          Cloudflare Workers with automatic scaling and high availability
+        <h3 class="text-lg font-semibold mb-4">Programming</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="project-tag">Python</span>
+          <span class="project-tag">JavaScript</span>
+          <span class="project-tag">Bash</span>
+          <span class="project-tag">Go</span>
+          <span class="project-tag">PowerShell</span>
+          <span class="project-tag">PHP</span>
+          <span class="project-tag">Java</span>
+          <span class="project-tag">Ruby</span>
         </div>
       </div>
       
       <div class="card fade-in">
-        <div class="text-3xl font-bold mono mb-2">&lt;100ms</div>
-        <div class="text-sm text-text-secondary mb-4">Average Response Time</div>
-        <div class="text-xs text-text-secondary">
-          Optimized for performance with edge computing and caching
+        <h3 class="text-lg font-semibold mb-4">Frameworks</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="project-tag">OWASP</span>
+          <span class="project-tag">PTES</span>
+          <span class="project-tag">NIST</span>
+          <span class="project-tag">MITRE ATT&CK</span>
+          <span class="project-tag">CIS Controls</span>
+          <span class="project-tag">ISO 27001</span>
+          <span class="project-tag">PCI DSS</span>
+          <span class="project-tag">GDPR</span>
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- Experience Timeline -->
+<section class="section-padding px-6 lg:px-12 bg-bg-secondary">
+  <div class="max-w-7xl mx-auto">
+    <span class="section-header fade-in">Professional Journey</span>
     
-    <div class="mt-12 grid lg:grid-cols-2 gap-8">
-      <div class="card fade-in">
-        <h3 class="text-xl font-bold mb-4">Security Endpoints</h3>
-        <div class="code-block">
-          <code>
-POST /api/auth_handshake      # Secure authentication<br>
-POST /api/client_verify        # Device verification<br>
-POST /api/jail_target          # Security lockdown<br>
-GET  /api/audit                # Security audit logs<br>
-POST /api/net_block            # IP blocking<br>
-GET  /api/admin/session_monitor # Session tracking
-          </code>
+    <div class="max-w-3xl mt-8">
+      <div class="timeline-item fade-in">
+        <div class="mb-2">
+          <h3 class="text-lg font-semibold">Senior Penetration Tester</h3>
+          <div class="text-sm text-text-secondary">CyberSec Solutions | 2024 - Present</div>
         </div>
+        <p class="text-sm text-text-secondary">
+          Leading security assessments for enterprise clients, conducting advanced web application and API testing, and mentoring junior security analysts.
+        </p>
       </div>
       
-      <div class="card fade-in">
-        <h3 class="text-xl font-bold mb-4">Data & Analytics</h3>
-        <div class="code-block">
-          <code>
-POST /api/collect_telemetry    # Analytics collection<br>
-GET  /api/data_fetch           # Secure data retrieval<br>
-POST /api/evidence_upload      # Secure file upload<br>
-GET  /api/visitors             # Traffic analytics<br>
-POST /api/ai_analyze           # AI-powered analysis<br>
-GET  /api/get_leaderboard      # Performance metrics
-          </code>
+      <div class="timeline-item fade-in">
+        <div class="mb-2">
+          <h3 class="text-lg font-semibold">Application Security Engineer</h3>
+          <div class="text-sm text-text-secondary">TechCorp Inc. | 2022 - 2024</div>
         </div>
+        <p class="text-sm text-text-secondary">
+          Performed security code reviews, developed security automation tools, and integrated security testing into CI/CD pipelines.
+        </p>
+      </div>
+      
+      <div class="timeline-item fade-in">
+        <div class="mb-2">
+          <h3 class="text-lg font-semibold">Security Researcher</h3>
+          <div class="text-sm text-text-secondary">Bug Bounty Programs | 2020 - 2022</div>
+        </div>
+        <p class="text-sm text-text-secondary">
+          Discovered and responsibly disclosed vulnerabilities in major platforms, earning recognition and rewards from top tech companies.
+        </p>
+      </div>
+      
+      <div class="timeline-item fade-in">
+        <div class="mb-2">
+          <h3 class="text-lg font-semibold">Junior Security Analyst</h3>
+          <div class="text-sm text-text-secondary">SecureNet Ltd. | 2019 - 2020</div>
+        </div>
+        <p class="text-sm text-text-secondary">
+          Conducted vulnerability assessments, supported penetration testing engagements, and developed security documentation.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Certifications -->
+<section class="section-padding px-6 lg:px-12">
+  <div class="max-w-7xl mx-auto">
+    <span class="section-header fade-in">Certifications & Recognition</span>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+      <div class="card text-center fade-in">
+        <div class="w-16 h-16 rounded-full bg-accent bg-opacity-10 flex items-center justify-center mx-auto mb-3">
+          <i data-lucide="award" class="w-8 h-8"></i>
+        </div>
+        <h4 class="font-semibold mb-1">OSCP</h4>
+        <p class="text-sm text-text-secondary">Offensive Security</p>
+      </div>
+      
+      <div class="card text-center fade-in">
+        <div class="w-16 h-16 rounded-full bg-accent bg-opacity-10 flex items-center justify-center mx-auto mb-3">
+          <i data-lucide="shield" class="w-8 h-8"></i>
+        </div>
+        <h4 class="font-semibold mb-1">CEH</h4>
+        <p class="text-sm text-text-secondary">EC-Council</p>
+      </div>
+      
+      <div class="card text-center fade-in">
+        <div class="w-16 h-16 rounded-full bg-accent bg-opacity-10 flex items-center justify-center mx-auto mb-3">
+          <i data-lucide="check-circle" class="w-8 h-8"></i>
+        </div>
+        <h4 class="font-semibold mb-1">GWAPT</h4>
+        <p class="text-sm text-text-secondary">GIAC</p>
+      </div>
+      
+      <div class="card text-center fade-in">
+        <div class="w-16 h-16 rounded-full bg-accent bg-opacity-10 flex items-center justify-center mx-auto mb-3">
+          <i data-lucide="star" class="w-8 h-8"></i>
+        </div>
+        <h4 class="font-semibold mb-1">Bug Bounty</h4>
+        <p class="text-sm text-text-secondary">Hall of Fame</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- Contact Section -->
-<section id="contact" class="section-padding px-6 lg:px-12 py-20 bg-bg-secondary">
+<section id="contact" class="section-padding px-6 lg:px-12 bg-bg-secondary">
   <div class="max-w-7xl mx-auto">
-    <div class="section-header fade-in">Get In Touch</div>
+    <span class="section-header fade-in">Get in Touch</span>
     
-    <div class="grid lg:grid-cols-2 gap-12">
+    <div class="grid md:grid-cols-2 gap-8 mt-8">
       <div class="fade-in-left">
-        <h2 class="text-3xl lg:text-4xl font-bold mb-6">
-          Let's Build Something <span class="gradient-text">Secure</span>
-        </h2>
-        
-        <p class="text-text-secondary leading-relaxed mb-8">
-          I'm actively seeking opportunities in web application penetration testing, security research, 
-          and offensive security roles. Whether you're looking for a security consultant, penetration tester, 
-          or secure development specialist, I'd love to discuss how I can contribute to your organization's security posture.
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">Let's work together</h2>
+        <p class="text-text-secondary mb-6">
+          I'm always interested in discussing new security projects, research collaborations, or speaking opportunities. Whether you need a security assessment or want to chat about the latest vulnerabilities, feel free to reach out.
         </p>
         
-        <div class="space-y-4 mb-8">
-          <div class="flex items-start gap-4">
-            <i data-lucide="briefcase" class="mt-1" size="20"></i>
-            <div>
-              <h4 class="font-semibold mb-1">Open to Opportunities</h4>
-              <p class="text-sm text-text-secondary">
-                Penetration testing, security research internships, offensive security consulting
-              </p>
+        <div class="space-y-4">
+          <a href="mailto:aakshathariharan@gmail.com" class="flex items-center gap-3 text-text-secondary hover:text-accent transition-colors group">
+            <div class="w-10 h-10 rounded-lg bg-accent-dim bg-opacity-10 flex items-center justify-center group-hover:bg-opacity-20 transition-all">
+              <i data-lucide="mail" class="w-5 h-5"></i>
             </div>
-          </div>
+            <span>aakshathariharan@gmail.com</span>
+          </a>
           
-          <div class="flex items-start gap-4">
-            <i data-lucide="map-pin" class="mt-1" size="20"></i>
-            <div>
-              <h4 class="font-semibold mb-1">Location</h4>
-              <p class="text-sm text-text-secondary">
-                Remote / Open to relocation
-              </p>
+          <a href="https://github.com/Aaks-hatH" target="_blank" class="flex items-center gap-3 text-text-secondary hover:text-accent transition-colors group">
+            <div class="w-10 h-10 rounded-lg bg-accent-dim bg-opacity-10 flex items-center justify-center group-hover:bg-opacity-20 transition-all">
+              <i data-lucide="github" class="w-5 h-5"></i>
             </div>
-          </div>
+            <span>github.com/Aaks-hatH</span>
+          </a>
           
-          <div class="flex items-start gap-4">
-            <i data-lucide="calendar" class="mt-1" size="20"></i>
-            <div>
-              <h4 class="font-semibold mb-1">Availability</h4>
-              <p class="text-sm text-text-secondary">
-                Immediate start / Flexible schedule
-              </p>
+          <a href="https://reddit.com/user/YardStunning2324" target="_blank" class="flex items-center gap-3 text-text-secondary hover:text-accent transition-colors group">
+            <div class="w-10 h-10 rounded-lg bg-accent-dim bg-opacity-10 flex items-center justify-center group-hover:bg-opacity-20 transition-all">
+              <i data-lucide="message-circle" class="w-5 h-5"></i>
             </div>
-          </div>
-        </div>
-        
-        <div class="card p-6">
-          <h4 class="font-semibold mb-4">Areas of Interest</h4>
-          <div class="flex flex-wrap gap-2">
-            <span class="badge">Web Application Security</span>
-            <span class="badge">Penetration Testing</span>
-            <span class="badge">Vulnerability Research</span>
-            <span class="badge">Security Consulting</span>
-            <span class="badge">Secure Development</span>
-            <span class="badge">API Security</span>
-          </div>
+            <span>reddit.com/u/YardStunning2324</span>
+          </a>
         </div>
       </div>
       
-      <div class="fade-in-right">
-        <div class="card p-8 mb-6">
-          <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
-          
-          <div class="space-y-6">
-            <a href="mailto:hariharanaakshat@gmail.com" class="flex items-center gap-4 group">
+      <div class="space-y-6 fade-in-right">
+        <div class="card p-6">
+          <h4 class="font-semibold mb-4">Social Media</h4>
+          <div class="space-y-3">
+            <a href="https://youtube.com/@Aaks-hatH?si=Qe8-Nrj9o6Qkqkqk" target="_blank" class="flex items-center gap-3 text-text-secondary hover:text-accent transition-colors group">
               <div class="w-12 h-12 rounded-lg bg-accent-dim bg-opacity-10 flex items-center justify-center group-hover:bg-opacity-20 transition-all">
-                <i data-lucide="mail" size="20"></i>
+                <i data-lucide="play" class="w-5 h-5"></i>
               </div>
               <div>
-                <div class="text-sm text-text-secondary">Email</div>
-                <div class="font-medium">hariharanaakshat@gmail.com</div>
+                <div class="text-sm text-text-secondary">YouTube</div>
+                <div class="font-medium">@Aaks-hatH</div>
               </div>
             </a>
             
-            <a href="https://github.com/Aaks-hatH" target="_blank" class="flex items-center gap-4 group">
+            <a href="https://tiktok.com/@Aakshat.Hariharan" target="_blank" class="flex items-center gap-3 text-text-secondary hover:text-accent transition-colors group">
               <div class="w-12 h-12 rounded-lg bg-accent-dim bg-opacity-10 flex items-center justify-center group-hover:bg-opacity-20 transition-all">
-                <i data-lucide="github" size="20"></i>
-              </div>
-              <div>
-                <div class="text-sm text-text-secondary">GitHub</div>
-                <div class="font-medium">github.com/Aaks-hatH</div>
-              </div>
-            </a>
-            
-            <a href="https://reddit.com/user/YardStunning2324" target="_blank" class="flex items-center gap-4 group">
-              <div class="w-12 h-12 rounded-lg bg-accent-dim bg-opacity-10 flex items-center justify-center group-hover:bg-opacity-20 transition-all">
-                <i data-lucide="message-circle" size="20"></i>
-              </div>
-              <div>
-                <div class="text-sm text-text-secondary">Reddit</div>
-                <div class="font-medium">u/YardStunning2324</div>
-              </div>
-            </a>
-            
-            <a href="https://tiktok.com/@Aakshat.Hariharan" target="_blank" class="flex items-center gap-4 group">
-              <div class="w-12 h-12 rounded-lg bg-accent-dim bg-opacity-10 flex items-center justify-center group-hover:bg-opacity-20 transition-all">
-                <i data-lucide="video" size="20"></i>
+                <i data-lucide="video" class="w-5 h-5"></i>
               </div>
               <div>
                 <div class="text-sm text-text-secondary">TikTok</div>
@@ -1773,15 +1288,15 @@ GET  /api/get_leaderboard      # Performance metrics
           <h4 class="font-semibold mb-4">Quick Links</h4>
           <div class="space-y-3">
             <a href="https://aaks-hath.pages.dev" target="_blank" class="flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors">
-              <i data-lucide="external-link" size="16"></i>
+              <i data-lucide="external-link" class="w-4 h-4"></i>
               Cyber Army Knife Portfolio
             </a>
             <a href="https://browserbricker.onrender.com" target="_blank" class="flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors">
-              <i data-lucide="external-link" size="16"></i>
+              <i data-lucide="external-link" class="w-4 h-4"></i>
               BrowserBricker Platform
             </a>
             <a href="https://github.com/Aaks-hatH" target="_blank" class="flex items-center gap-2 text-sm text-text-secondary hover:text-accent transition-colors">
-              <i data-lucide="external-link" size="16"></i>
+              <i data-lucide="external-link" class="w-4 h-4"></i>
               All GitHub Repositories
             </a>
           </div>
@@ -1795,19 +1310,19 @@ GET  /api/get_leaderboard      # Performance metrics
 <footer class="section-padding px-6 lg:px-12 py-8">
   <div class="max-w-7xl mx-auto">
     <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-      <div class="text-sm text-text-secondary">
+      <div class="text-sm text-text-secondary text-center md:text-left">
         © 2026 Aakshat Hariharan. Offensive Security Portfolio.
       </div>
       
       <div class="flex gap-6">
         <a href="https://github.com/Aaks-hatH" target="_blank" class="text-text-secondary hover:text-accent transition-colors">
-          <i data-lucide="github" size="20"></i>
+          <i data-lucide="github" class="w-5 h-5"></i>
         </a>
-        <a href="mailto:hariharanaakshat@gmail.com" class="text-text-secondary hover:text-accent transition-colors">
-          <i data-lucide="mail" size="20"></i>
+        <a href="mailto:aakshathariharan@gmail.com" class="text-text-secondary hover:text-accent transition-colors">
+          <i data-lucide="mail" class="w-5 h-5"></i>
         </a>
         <a href="https://reddit.com/user/YardStunning2324" target="_blank" class="text-text-secondary hover:text-accent transition-colors">
-          <i data-lucide="message-circle" size="20"></i>
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
         </a>
       </div>
     </div>
@@ -1824,18 +1339,20 @@ lucide.createIcons();
 // Loading Screen
 window.addEventListener('load', () => {
   setTimeout(() => {
-    document.getElementById('loading-screen').style.opacity = '0';
+    const loadingScreen = document.getElementById('loading-screen');
+    loadingScreen.style.opacity = '0';
     setTimeout(() => {
-      document.getElementById('loading-screen').style.display = 'none';
+      loadingScreen.style.display = 'none';
     }, 500);
-  }, 2000);
+  }, 1500);
 });
 
-// Particles.js Configuration
+// Particles.js Configuration - Reduced for mobile performance
+const isMobile = window.innerWidth < 768;
 particlesJS('particles-js', {
   particles: {
     number: {
-      value: 80,
+      value: isMobile ? 40 : 80,
       density: {
         enable: true,
         value_area: 800
@@ -1864,7 +1381,7 @@ particlesJS('particles-js', {
     },
     move: {
       enable: true,
-      speed: 2,
+      speed: isMobile ? 1 : 2,
       direction: 'none',
       random: false,
       straight: false,
@@ -1876,7 +1393,7 @@ particlesJS('particles-js', {
     detect_on: 'canvas',
     events: {
       onhover: {
-        enable: true,
+        enable: !isMobile,
         mode: 'grab'
       },
       onclick: {
@@ -1917,13 +1434,13 @@ new Typed('#typed', {
 // GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
-// Fade In Animations
+// Enhanced Fade In Animations with stagger
 gsap.utils.toArray('.fade-in').forEach((element, index) => {
   gsap.from(element, {
     opacity: 0,
-    y: 50,
-    duration: 1,
-    delay: index * 0.1,
+    y: 60,
+    duration: 1.2,
+    ease: 'power3.out',
     scrollTrigger: {
       trigger: element,
       start: 'top 85%',
@@ -1936,8 +1453,9 @@ gsap.utils.toArray('.fade-in').forEach((element, index) => {
 gsap.utils.toArray('.fade-in-left').forEach(element => {
   gsap.from(element, {
     opacity: 0,
-    x: -50,
-    duration: 1,
+    x: -60,
+    duration: 1.2,
+    ease: 'power3.out',
     scrollTrigger: {
       trigger: element,
       start: 'top 85%',
@@ -1949,8 +1467,9 @@ gsap.utils.toArray('.fade-in-left').forEach(element => {
 gsap.utils.toArray('.fade-in-right').forEach(element => {
   gsap.from(element, {
     opacity: 0,
-    x: 50,
-    duration: 1,
+    x: 60,
+    duration: 1.2,
+    ease: 'power3.out',
     scrollTrigger: {
       trigger: element,
       start: 'top 85%',
@@ -1959,16 +1478,17 @@ gsap.utils.toArray('.fade-in-right').forEach(element => {
   });
 });
 
-// Skill Bar Animations
+// Enhanced Skill Bar Animations
 gsap.utils.toArray('.skill-progress').forEach(bar => {
   const width = bar.getAttribute('data-width');
   gsap.to(bar, {
     width: width + '%',
-    duration: 1.5,
+    duration: 2,
     ease: 'power2.out',
     scrollTrigger: {
       trigger: bar,
-      start: 'top 90%'
+      start: 'top 90%',
+      toggleActions: 'play none none none'
     }
   });
 });
@@ -2005,20 +1525,22 @@ function closeMobileMenu() {
   document.body.style.overflow = 'auto';
 }
 
-// Custom Cursor
-const cursorDot = document.getElementById('cursor-dot');
-const cursorOutline = document.getElementById('cursor-outline');
+// Custom Cursor - Desktop only
+if (window.innerWidth >= 1024) {
+  const cursorDot = document.getElementById('cursor-dot');
+  const cursorOutline = document.getElementById('cursor-outline');
 
-window.addEventListener('mousemove', (e) => {
-  const posX = e.clientX;
-  const posY = e.clientY;
-  
-  cursorDot.style.left = `${posX}px`;
-  cursorDot.style.top = `${posY}px`;
-  
-  cursorOutline.style.left = `${posX}px`;
-  cursorOutline.style.top = `${posY}px`;
-});
+  window.addEventListener('mousemove', (e) => {
+    const posX = e.clientX;
+    const posY = e.clientY;
+    
+    cursorDot.style.left = `${posX}px`;
+    cursorDot.style.top = `${posY}px`;
+    
+    cursorOutline.style.left = `${posX}px`;
+    cursorOutline.style.top = `${posY}px`;
+  });
+}
 
 // Smooth Scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2030,6 +1552,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         behavior: 'smooth',
         block: 'start'
       });
+      closeMobileMenu();
     }
   });
 });
@@ -2065,39 +1588,49 @@ const observer = new IntersectionObserver((entries) => {
 
 statNumbers.forEach(stat => observer.observe(stat));
 
-// Add hover effect to cards
-document.querySelectorAll('.card').forEach(card => {
-  card.addEventListener('mouseenter', function() {
-    gsap.to(this, {
-      scale: 1.02,
-      duration: 0.3,
-      ease: 'power2.out'
+// Enhanced card hover effect - Desktop only
+if (window.innerWidth >= 768) {
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      gsap.to(this, {
+        scale: 1.02,
+        duration: 0.4,
+        ease: 'power2.out'
+      });
+    });
+    
+    card.addEventListener('mouseleave', function() {
+      gsap.to(this, {
+        scale: 1,
+        duration: 0.4,
+        ease: 'power2.out'
+      });
     });
   });
-  
-  card.addEventListener('mouseleave', function() {
-    gsap.to(this, {
-      scale: 1,
-      duration: 0.3,
-      ease: 'power2.out'
+}
+
+// Enhanced parallax effect - Desktop only
+if (window.innerWidth >= 768) {
+  window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const parallaxElements = document.querySelectorAll('.hero-title, #typed');
+    
+    parallaxElements.forEach(element => {
+      const speed = 0.3;
+      element.style.transform = `translateY(${scrolled * speed}px)`;
     });
   });
-});
+}
 
-// Add parallax effect to hero section
-window.addEventListener('scroll', () => {
-  const scrolled = window.pageYOffset;
-  const parallaxElements = document.querySelectorAll('.hero-title, #typed');
-  
-  parallaxElements.forEach(element => {
-    const speed = 0.5;
-    element.style.transform = `translateY(${scrolled * speed}px)`;
+// Performance optimization: Disable animations on low-end devices
+if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+  document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
+    el.style.opacity = '1';
   });
-});
+}
 
-console.log('%c🔐 Security Professional Portfolio', 'color: #fff; font-size: 20px; font-weight: bold; background: #000; padding: 10px;');
-console.log('%cAakshat Hariharan | Web Application Penetration Tester', 'color: #888; font-size: 14px;');
-console.log('%chttps://github.com/Aaks-hatH', 'color: #888; font-size: 12px;');
+console.log('%c Security Professional Portfolio', 'color: #ffffff; font-size: 20px; font-weight: bold;');
+console.log('%cInterested in the code? Check out the repository!', 'color: #888888; font-size: 14px;');
 </script>
 
 </body>
